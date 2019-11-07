@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:10-alpine
 LABEL Maintainer="Feng Yu<abcfy2@163.com>"
 
 ENV LANG en_US.UTF-8
@@ -6,9 +6,6 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV JDK_VERSION 8
 ENV JAVA_HOME /usr/lib/jvm/zulu${JDK_VERSION}-ca
-
-# 正式发布删除
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories
 
 # Install glibc
 # Reference: https://github.com/AdoptOpenJDK/openjdk-docker/blob/master/8/jdk/alpine/Dockerfile.hotspot.releases.slim
