@@ -15,13 +15,18 @@ jobs:
             git checkout -t origin/"${branch}"
             BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
             VER="${BRANCH_NAME}"
-            [ "${VER}" = 'master' ] && NODE_TAG=alpine || NODE_TAG="${VER}"
+            if [ "${VER}" = 'master' ]; then
+                VER=latest
+                NODE_TAG=alpine
+            else
+                NODE_TAG="${VER}"
+            fi
             UPSTREAM_VER="$(docker run --rm node:${NODE_TAG} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
             DOWNSTREAM_VER="$(docker run --rm abcfy2/node_android:${VER} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
             echo "upstream verion: ${UPSTREAM_VER}"
             echo "downstream version: ${DOWNSTREAM_VER}"
             [ "${UPSTREAM_VER}" != "${DOWNSTREAM_VER}" ] && \
-              curl -sSkLf -d "{\"source_type\": \"Branch\", \"source_name\": "${BRANCH_NAME}"}" -H 'Content-Type: application/json' "${DOCKER_HUB_BUILD_TRIGGER_URL}" || \
+                curl -sSkLf -d "{\"source_type\": \"Branch\", \"source_name\": \"${BRANCH_NAME}\", \"build\": true}" -H 'Content-Type: application/json' "${DOCKER_HUB_BUILD_TRIGGER_URL}" || \
               true
         done
         git branch
