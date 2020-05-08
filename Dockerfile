@@ -10,7 +10,7 @@ ENV JAVA_HOME /usr/lib/jvm/zulu${JDK_VERSION}-ca
 # Install glibc
 # Reference: https://github.com/AdoptOpenJDK/openjdk-docker/blob/master/8/jdk/alpine/Dockerfile.hotspot.releases.slim
 RUN apk add --no-cache --virtual .build-deps curl binutils \
-    && GLIBC_VER="2.30-r0" \
+    && GLIBC_VER="2.31-r0" \
     && ALPINE_GLIBC_REPO="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" \
     && GCC_LIBS_URL="https://archive.archlinux.org/packages/g/gcc-libs/gcc-libs-9.1.0-2-x86_64.pkg.tar.xz" \
     && GCC_LIBS_SHA256="91dba90f3c20d32fcf7f1dbe91523653018aa0b8d2230b00f822f6722804cf08" \
@@ -50,7 +50,7 @@ RUN wget --quiet https://cdn.azul.com/public_keys/alpine-signing@azul.com-5d5dc4
 # https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=all
-ARG GRADLE_WRAPPER_GENERATOR_VER=6.2.1
+ARG GRADLE_WRAPPER_GENERATOR_VER=6.4
 RUN cd /opt && \
     wget -q https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
     unzip -q gradle*.zip && \
