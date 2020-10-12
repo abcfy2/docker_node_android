@@ -15,12 +15,13 @@ jobs:
             git checkout -t origin/"${branch}"
             BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
             VER="${BRANCH_NAME}"
+            NODE_TAG="${BRANCH_NAME}"
             if [ "${VER}" = 'master' ]; then
                 VER=latest
                 NODE_TAG=alpine
-            else
-                NODE_TAG="${VER}"
             fi
+            docker pull node:${NODE_TAG}
+            docker pull abcfy2/node_android:${VER}
             UPSTREAM_VER="$(docker run --rm node:${NODE_TAG} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
             DOWNSTREAM_VER="$(docker run --rm abcfy2/node_android:${VER} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
             echo "upstream verion: ${UPSTREAM_VER}"
