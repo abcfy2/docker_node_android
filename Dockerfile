@@ -51,7 +51,7 @@ RUN wget --quiet https://cdn.azul.com/public_keys/alpine-signing@azul.com-5d5dc4
 # https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=all
-ARG GRADLE_WRAPPER_GENERATOR_VER=6.6.1
+ARG GRADLE_WRAPPER_GENERATOR_VER=6.7
 RUN cd /opt && \
     wget -q https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
     unzip -q gradle*.zip && \
