@@ -71,6 +71,6 @@ RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
     wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip && \
     unzip -q commandlinetools-linux*.zip && \
     rm commandlinetools-linux*.zip && \
-    ln -s "${ANDROID_HOME}/tools/bin/sdkmanager" /usr/local/bin
+    ln -s "${ANDROID_HOME}/cmdline-tools/bin/sdkmanager" /usr/local/bin
 RUN yes | sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" "build-tools;${ANDROID_BUILD_TOOL_VERSION}" && \
     yes | sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses && rm -fr ~/.android
