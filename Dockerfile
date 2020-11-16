@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 LABEL Maintainer="Feng Yu<abcfy2@163.com>"
 
 ENV LANG en_US.UTF-8
