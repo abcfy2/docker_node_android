@@ -63,7 +63,7 @@ RUN cd /opt && \
 
 # download and install Android SDK
 # https://developer.android.google.cn/studio/#command-tools
-ARG ANDROID_SDK_VERSION=6609375
+ARG ANDROID_SDK_VERSION=6858069
 ARG ANDROID_BUILD_TOOL_VERSION=30.0.2
 ENV ANDROID_SDK_ROOT /opt/android-sdk
 ENV ANDROID_HOME ${ANDROID_SDK_ROOT}
