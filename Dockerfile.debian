@@ -8,15 +8,14 @@ ENV LC_ALL en_US.UTF-8
 ARG JDK_VERSION=8
 
 RUN apt update && \
-    apt install -y gnupg curl && \
+    apt install -y gnupg wget apt-transport-https zip && \
     apt-key adv \
     --keyserver hkp://keyserver.ubuntu.com:80 \
     --recv-keys 0xB1998361219BD9C9 && \
-    curl -LO https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-3_all.deb && \
+    wget https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-3_all.deb && \
     apt install -y ./zulu-repo_1.0.0-3_all.deb && \
     apt update && \
     apt install -y zulu${JDK_VERSION}-jdk-headless && \
-    apt purge -y gnupg curl && \
     rm -fr /var/cache/apt/* /var/lib/apt/lists/*
 
 # download and install Gradle
@@ -25,7 +24,7 @@ ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=bin
 ARG GRADLE_WRAPPER_GENERATOR_VER=7.3.2
 RUN cd /opt && \
-    wget -q https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
+    wget https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
     unzip -q gradle*.zip && \
     mkdir -p "gradle-${GRADLE_VERSION}-${GRADLE_DIST}-wrapper" && \
     cd "gradle-${GRADLE_VERSION}-${GRADLE_DIST}-wrapper" && \
