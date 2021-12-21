@@ -51,6 +51,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: ${{ env.PUSH }}
+          pull: true
           file: Dockerfile.alpine
           build-args: |
             NODE_TAG=${{ matrix.node_tag }}
