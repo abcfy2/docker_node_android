@@ -1,5 +1,10 @@
 # node android docker image
 
+![Docker Build (Debian)](https://github.com/abcfy2/docker_node_android/actions/workflows/docker_build_debian.yml/badge.svg)
+![Docker Build (Alpine)](https://github.com/abcfy2/docker_node_android/actions/workflows/docker_build_alpine.yml/badge.svg)
+[![Docker Pulls](https://img.shields.io/docker/pulls/abcfy2/node_android)](https://hub.docker.com/r/abcfy2/node_android)
+[![Latest Tag](https://img.shields.io/docker/v/abcfy2/node_android?sort=semver)](https://hub.docker.com/r/abcfy2/node_android/tags)
+
 Base docker image with node and android for ionic or cordova.
 
 Github repository: [abcfy2/docker_node_android](https://github.com/abcfy2/docker_node_android)
