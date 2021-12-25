@@ -8,8 +8,8 @@ ENV LC_ALL en_US.UTF-8
 ENV JDK_VERSION 8
 
 RUN wget --quiet https://cdn.azul.com/public_keys/alpine-signing@azul.com-5d5dc44c.rsa.pub -P /etc/apk/keys/ && \
-    echo "https://repos.azul.com/zulu/alpine" >> /etc/apk/repositories && \
-    apk --no-cache add zulu${JDK_VERSION}-jdk-headless gcompat
+    apk --no-cache add zulu${JDK_VERSION}-jdk-headless gcompat --repository https://repos.azul.com/zulu/alpine && \
+    rm -f /etc/apk/keys/alpine-signing@azul.com-5d5dc44c.rsa.pub
 
 # download and install Gradle
 # https://services.gradle.org/distributions/
@@ -29,8 +29,8 @@ RUN cd /opt && \
 # download and install Android SDK
 # https://developer.android.google.cn/studio/#command-tools
 ARG ANDROID_SDK_VERSION=7583922
-ENV ANDROID_SDK_ROOT /opt/android-sdk
-ENV ANDROID_HOME ${ANDROID_SDK_ROOT}
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV ANDROID_HOME=${ANDROID_SDK_ROOT}
 RUN mkdir -p ${ANDROID_HOME} && cd ${ANDROID_HOME} && \
     wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip && \
     unzip -q commandlinetools-linux*.zip && \
