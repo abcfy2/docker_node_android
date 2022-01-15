@@ -40,3 +40,28 @@ build:
     - npm ci
     - npx -p ionic -p cordova -- ionic cordova build android --prod --release ...
 ```
+
+Working with Gitlab CI cache example:
+
+```yaml
+variables:
+  ANDROID_SDK_ROOT: "${CI_PROJECT_DIR}/android-sdk"
+  ANDROID_HOME: "${CI_PROJECT_DIR}/android-sdk"
+  NPM_CONFIG_CACHE: "${CI_PROJECT_DIR}/npm_cache"
+  GRADLE_USER_HOME: "${CI_PROJECT_DIR}/gradle_cache"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dfile.encoding=UTF-8"
+
+default:
+  before_script:
+    - yes | sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses || true
+  after_script:
+    - GRADLE_WRAPPER_DIR="${GRADLE_USER_HOME:-${HOME}/.gradle}/wrapper"
+    - '[ -d "${GRADLE_WRAPPER_DIR}" ] && find "${GRADLE_WRAPPER_DIR}" -name "gradle-*.zip" -delete || true'
+  cache:
+    paths:
+      - ${ANDROID_SDK_ROOT}
+      - ${NPM_CONFIG_CACHE}
+      - ${GRADLE_USER_HOME}/caches/
+      - ${GRADLE_USER_HOME}/wrapper/
+# ... your build steps here
+```
