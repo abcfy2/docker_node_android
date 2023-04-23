@@ -24,14 +24,20 @@ jobs:
           - 12-alpine
           - 14-alpine
           - 16-alpine
+          - 18-alpine
+        jdk_version:
+          - 8
+          - 11
     steps:
       - name: Determine if push is needed
         run: |
           echo "GITHUB_EVENT_NAME = ${GITHUB_EVENT_NAME}"
+          NODE_TAG="${{ matrix.node_tag }}"
+          JDK_VERSION="${{ matrix.jdk_version }}"
           PUSH=true
           if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
-            UPSTREAM_VER="$(docker run --rm --pull always node:${{ matrix.node_tag }} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
-            DOWNSTREAM_VER="$(docker run --rm --pull always ${DOCKER_REPOSITORY}:${{ matrix.node_tag }} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
+            UPSTREAM_VER="$(docker run --rm --pull always node:${NODE_TAG} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
+            DOWNSTREAM_VER="$(docker run --rm --pull always ${DOCKER_REPOSITORY}:${NODE_TAG} sh -c 'echo ${NODE_VERSION}' 2>/dev/null)"
             echo "upstream verion: ${UPSTREAM_VER}"
             echo "downstream version: ${DOWNSTREAM_VER}"
             if [ "${UPSTREAM_VER}" = "${DOWNSTREAM_VER}" ]; then
@@ -40,19 +46,31 @@ jobs:
           fi
           echo "PUSH = ${PUSH}"
           echo "PUSH=${PUSH}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
+          TAG="${DOCKER_REPOSITORY}:${NODE_TAG}-java${JDK_VERSION}"
+          if [ "x${JDK_VERSION}" = x8 ]; then
+            TAG="${DOCKER_REPOSITORY}:${NODE_TAG},${TAG}"
+          fi
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
+          # platforms: linux/amd64,linux/arm64/v8
           push: ${{ env.PUSH }}
           pull: true
+          context: .
           file: Dockerfile.alpine
           build-args: |
             NODE_TAG=${{ matrix.node_tag }}
-          tags: ${{ env.DOCKER_REPOSITORY }}:${{ matrix.node_tag }}
+            JDK_VERSION=${{ matrix.jdk_version }}
+          tags: ${{ env.TAG }}

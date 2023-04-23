@@ -22,7 +22,7 @@ RUN apt update && \
 # https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=bin
-ARG GRADLE_WRAPPER_GENERATOR_VER=7.3.2
+ARG GRADLE_WRAPPER_GENERATOR_VER=8.1
 RUN cd /opt && \
     wget https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
     unzip -q gradle*.zip && \

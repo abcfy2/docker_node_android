@@ -5,7 +5,7 @@ LABEL Maintainer="Feng Yu<abcfy2@163.com>"
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV JDK_VERSION 8
+ARG JDK_VERSION=8
 
 RUN wget --quiet https://cdn.azul.com/public_keys/alpine-signing@azul.com-5d5dc44c.rsa.pub -P /etc/apk/keys/ && \
     apk --no-cache add zulu${JDK_VERSION}-jdk-headless gcompat --repository https://repos.azul.com/zulu/alpine && \
@@ -15,7 +15,7 @@ RUN wget --quiet https://cdn.azul.com/public_keys/alpine-signing@azul.com-5d5dc4
 # https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=bin
-ARG GRADLE_WRAPPER_GENERATOR_VER=7.3.2
+ARG GRADLE_WRAPPER_GENERATOR_VER=8.1
 RUN cd /opt && \
     wget -q https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
     unzip -q gradle*.zip && \
