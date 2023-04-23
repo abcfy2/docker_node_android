@@ -71,7 +71,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          # platforms: linux/amd64,linux/arm64/v8
+          platforms: linux/amd64,linux/arm64/v8
           push: ${{ env.PUSH }}
           pull: true
           context: .

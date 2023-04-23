@@ -2,12 +2,14 @@ ARG NODE_TAG=latest
 FROM node:${NODE_TAG}
 LABEL Maintainer="Feng Yu<abcfy2@163.com>"
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG C.UTF-8
 ARG JDK_VERSION=8
+ARG USE_CHINA_MIRROR=0
 
-RUN apt update && \
+RUN if [ x"${USE_CHINA_MIRROR}" = x1 ]; then \
+    sed -i "s|http://deb.debian.org/debian|http://mirror.sjtu.edu.cn/debian|g" /etc/apt/sources.list; \
+    fi && \
+    apt update && \
     apt install -y gnupg wget apt-transport-https zip && \
     apt-key adv \
     --keyserver hkp://keyserver.ubuntu.com:80 \
@@ -22,9 +24,13 @@ RUN apt update && \
 # https://services.gradle.org/distributions/
 ARG GRADLE_VERSION=4.1
 ARG GRADLE_DIST=bin
-ARG GRADLE_WRAPPER_GENERATOR_VER=8.1
+ARG GRADLE_WRAPPER_GENERATOR_VER=8.1.1
 RUN cd /opt && \
-    wget https://services.gradle.org/distributions/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip && \
+    GRADLE_DOWNLOAD_BASE="https://services.gradle.org/distributions" && \
+    if [ x"${USE_CHINA_MIRROR}" = x1 ]; then \
+    GRADLE_DOWNLOAD_BASE="https://mirrors.huaweicloud.com/gradle"; \
+    fi && \
+    wget -q "${GRADLE_DOWNLOAD_BASE}/gradle-${GRADLE_WRAPPER_GENERATOR_VER}-bin.zip" && \
     unzip -q gradle*.zip && \
     mkdir -p "gradle-${GRADLE_VERSION}-${GRADLE_DIST}-wrapper" && \
     cd "gradle-${GRADLE_VERSION}-${GRADLE_DIST}-wrapper" && \
