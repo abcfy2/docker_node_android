@@ -15,14 +15,10 @@ Github repository: [abcfy2/docker_node_android](https://github.com/abcfy2/docker
 - [18[-slim]](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.debian)
 - [16[-slim]](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.debian)
 - [14[-slim]](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.debian)
-- [12[-slim]](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.debian)
-- [10[-slim]](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.debian)
 - [alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
 - [18-alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
 - [16-alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
 - [14-alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
-- [12-alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
-- [10-alpine](https://github.com/abcfy2/docker_node_android/blob/main/Dockerfile.alpine)
 
 Also, all tags should append `-java8/java11` to use JAVA 8 or 11, if not provided, default should be **JAVA 8**.
 

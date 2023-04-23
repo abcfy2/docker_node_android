@@ -21,10 +21,6 @@ jobs:
         node_tag:
           - latest
           - slim
-          - 10
-          - 10-slim
-          - 12
-          - 12-slim
           - 14
           - 14-slim
           - 16

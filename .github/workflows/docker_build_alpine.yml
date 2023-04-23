@@ -20,8 +20,6 @@ jobs:
       matrix:
         node_tag:
           - alpine
-          - 10-alpine
-          - 12-alpine
           - 14-alpine
           - 16-alpine
           - 18-alpine
